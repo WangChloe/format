@@ -1,0 +1,29 @@
+@echo off
+setlocal
+set SVN_BINDIR=D:\svn\bin
+set REPOS=%1
+set TXN=%2
+rem check that logmessage contains at least 5 characters
+svnlook log "%REPOS%" -t "%TXN%" | findstr "....." > nul
+endlocal
+if %errorlevel% gtr 0 goto err
+exit 0
+:err
+echo add notes 1>&2
+exit 1
+
+@echo off
+setlocal
+set SVN_BINDIR=D:\svn\bin
+set REPOS=%1
+set TXN=%2
+set LOGMSG=%SVN_BINDIR% log -t %TXN% %REPOS%
+start cmd js-beautify D:\VisualSVNrepos\wangchloe\branches\test.js -o D:\VisualSVNrepos\wangchloe\branches\test.js
+pause
+endlocal
+if %errorlevel% gtr 0 goto err
+echo %PATH%
+exit 0
+:err
+echo js-beautify failed 1>&2
+exit 1
